@@ -1,4 +1,12 @@
 const mongoose = require('mongoose');
+const dnsServers = (process.env.DNS_SERVERS || '')
+  .split(',')
+  .map((server) => server.trim())
+  .filter(Boolean);
+
+if (dnsServers.length > 0) {
+  require('node:dns').setServers(dnsServers);
+}
 
 // This function connects our Express app to a MongoDB database.
 // It is async because opening a network connection takes time and
